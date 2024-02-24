@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
-import { FitSalesAppMdmStack } from '../lib/fit-sales-app-mdm-stack';
+import { AnamnesisApiAppSyncStack } from '../lib/anamnesis-api-app-sync-stack';
 
 const app = new cdk.App();
-new FitSalesAppMdmStack(app, 'FitSalesAppMdmStack');
+new AnamnesisApiAppSyncStack(app, 'FitSalesAppMdmStack');

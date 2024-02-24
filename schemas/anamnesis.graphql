@@ -1,0 +1,293 @@
+"""
+Enumeration of dominant eye values
+"""
+enum DominantEye {
+    """
+    Stands for a value for a Right dominant eye
+    """
+    R
+
+    """
+    Stands for a value for a Left dominant eye
+    """
+    L
+}
+
+"""
+Describes result type for anamnesis entry form field
+"""
+type AnamnesisEntryType {
+    """
+    A Yes/No answer type for the questionary form field.
+    True stands for "Yes" and false stands for "No"
+    """
+    flag: Boolean!
+
+    """
+    A commentary field
+    """
+    comment: String!
+}
+
+"""
+Describes result type for dominant eye, anamnesis form field
+"""
+type DominantEyeEntryType {
+    """
+    An enumeration for the dominant eye value
+    """
+    dominantEye: DominantEye!
+
+    """
+    A commentary field
+    """
+    comment: String!
+}
+
+"""
+Describes result type for anamnesis form
+"""
+type AnamnesisDataType {
+    """
+    A customer id
+    """
+    customerId: ID!
+
+    """
+    Presence of diseases/allergies form field
+    """
+    diseaseOrAllergies: AnamnesisEntryType!
+
+    """
+    Medications form field
+    """
+    medications: AnamnesisEntryType!
+
+    """
+    Medical history form field
+    """
+    medicalHistory: AnamnesisEntryType!
+
+    """
+    Presence of scars or surgeries on the eye form field
+    """
+    scarsOrSurgeries: AnamnesisEntryType!
+
+    """
+    Symptoms such as burning, itching, dryness, or tearing of the eye form field
+    """
+    symptoms: AnamnesisEntryType!
+
+    """
+    Dominant eye form field
+    """
+    dominantEye: DominantEyeEntryType!
+
+    """
+    General notes form field
+    """
+    generalNotes: String!
+}
+
+"""
+Describes result type for anamnesisData query
+"""
+type AnamnesisDataResult implements OperationResult {
+    """
+    Status code of the operation
+    """
+    status: OperationResultType!
+
+    """
+    Message describing the result of the operation. This is for internal use (diagnosis) only.
+    """
+    message: String!
+
+    """
+    Customer's anamnesis data
+    """
+    anamnesis: AnamnesisDataType!
+}
+
+"""
+Describes an input from anamnesisData query
+"""
+input AnamnesisDataInput {
+    """
+    Customer ID to retrieve data for
+    """
+    customerId: ID!
+}
+
+
+"""
+An enumeration that describes the status of a graphQL operations.
+"""
+enum OperationResultType {
+    """
+    Indicates that the operation was successful
+    """
+    SUCCESS
+
+    """
+    Indicates that the operation has failed
+    """
+    FAILED
+}
+
+"""
+Common interface of graphQL operation results
+"""
+interface OperationResult {
+    """
+    Status code of the operation
+    """
+    status: OperationResultType!
+
+    """
+    Message describing the result of the operation. This is for internal use (diagnosis) only.
+    """
+    message: String!
+}
+
+"""
+Describes a result type for the submitAnamnesisData query
+"""
+type SubmitAnamnesisResult implements OperationResult {
+    """
+    Status code of the operation
+    """
+    status: OperationResultType!
+
+    """
+    Message describing the result of the operation. This is for internal use (diagnosis) only.
+    """
+    message: String!
+}
+
+"""
+Describes a common input type for form fields
+"""
+input AnamnesisEntryInput {
+    """
+    A Yes/No answer type for the questionary form field.
+    True stands for "Yes" and false stands for "No"
+    """
+    flag: Boolean!
+
+    """
+    A commentary field
+    """
+    comment: String!
+}
+
+"""
+Describes an input for a dominantEye form field
+"""
+input DominantEyeEntryInput {
+    """
+    An enumeration for the dominant eye value
+    """
+    dominantEye: DominantEye!
+
+    """
+    A commentary field
+    """
+    comment: String!
+}
+
+"""
+Describes an input for submitAnamnesisData mutation
+"""
+input SubmitAnamnesisInput {
+    """
+    A customer id
+    """
+    customerId: ID!
+
+    """
+    Presence of diseases/allergies form field
+    """
+    diseaseOrAllergies: AnamnesisEntryInput!
+
+    """
+    Medications form field
+    """
+    medications: AnamnesisEntryInput!
+
+    """
+    Medical history form field
+    """
+    medicalHistory: AnamnesisEntryInput!
+
+    """
+    Presence of scars or surgeries on the eye form field
+    """
+    scarsOrSurgeries: AnamnesisEntryInput!
+
+    """
+    Symptoms such as burning, itching, dryness, or tearing of the eye form field
+    """
+    symptoms: AnamnesisEntryInput!
+
+    """
+    Dominant eye form field
+    """
+    dominantEye: DominantEyeEntryInput!
+
+    """
+    General notes form field
+    """
+    generalNotes: String!
+}
+
+type GetAnamnesisDataResult {
+    glaucoma: Boolean
+    customerId: String
+    glaucomaFamily: Boolean
+    comment: String
+    diabetesMellitus: Boolean
+    diabeticRetinopathy: Boolean
+    hypertension: Boolean
+    ageRelatedMacularDegeneration: Boolean
+    id: String
+    createdTimestamp: Int
+    channelId: String
+    consentsMetadata: [ConsentsMetadata]
+    metadata: Metadata
+}
+
+type ChannelSource {
+    version: String
+}
+
+type ConsentsMetadata {
+    type: String
+    date: String
+    referenceId: String
+}
+
+type Metadata {
+    dataSource: String
+    channelSource: ChannelSource
+}
+
+"""
+Lists all available queries in the MDM domain.
+"""
+type Query {
+    """
+    Retrieves customer anamnesis data
+    """
+    getAnamnesis: GetAnamnesisDataResult!
+}
+
+"""
+Lists all available mutations in the MDM domain.
+"""
+type Mutation {
+    """
+    Submits customer anamnesis data
+    """
+    submitAnamnesisData(input: SubmitAnamnesisInput!): SubmitAnamnesisResult!
+}

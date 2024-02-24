@@ -1,11 +1,11 @@
 import * as cdk from 'aws-cdk-lib';
 import { Template, Match } from 'aws-cdk-lib/assertions';
-import * as FitSalesAppMdm from '../lib/fit-sales-app-mdm-stack';
+import * as FitSalesAppMdm from '../lib/anamnesis-api-app-sync-stack';
 
 test('SQS Queue and SNS Topic Created', () => {
   const app = new cdk.App();
   // WHEN
-  const stack = new FitSalesAppMdm.FitSalesAppMdmStack(app, 'MyTestStack');
+  const stack = new FitSalesAppMdm.AnamnesisApiAppSyncStack(app, 'MyTestStack');
   // THEN
 
   const template = Template.fromStack(stack);
